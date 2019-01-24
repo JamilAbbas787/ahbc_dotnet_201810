@@ -15,12 +15,23 @@ namespace WebApplication1.Controllers
         // GET: Student
         public ActionResult Index()
         {
-            var student = _context.Students
-                .Where(s => s.ID >= 1 && s.ID <= 3)
-                .FirstOrDefault().ToString();
+            var student = _context.Students;
 
-            var test = 2;
-            return View();
+            return View(student);
+        }
+
+        public ActionResult OneStudent(int id)
+        {
+            var student = _context.Students.First(s => s.ID == id);
+
+            return View(student);
+        }
+
+        public ActionResult StudentName(string firstName)
+        {
+            var student = _context.Students.First(s => s.FirstName == firstName);
+
+            return View(student);
         }
     }
 }
