@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
         public ActionResult Index()
         {
             var context = new SchoolContext();
-            context.Students.First();
+            var student = context.Students.FirstOrDefault();
 
             return View();
         }
