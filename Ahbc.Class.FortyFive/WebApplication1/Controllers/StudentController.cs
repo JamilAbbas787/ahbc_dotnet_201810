@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -27,9 +28,33 @@ namespace WebApplication1.Controllers
             return View(student);
         }
 
-        public ActionResult StudentName(string firstName)
+        public ActionResult Create()
         {
-            var student = _context.Students.First(s => s.FirstName == firstName);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(Student newStudent)
+        {
+
+            if (ModelState.IsValid)
+            {
+                //Add newStudent to the Student table
+
+                _context.Students.Add(newStudent);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "The Information you entered was not valid.";
+                return View();
+            }
+        }
+
+        public ActionResult StudentName(string firstname)
+        {
+            var student = _context.Students.Where(s => s.FirstName == firstname).First<Student>();
 
             return View(student);
         }
